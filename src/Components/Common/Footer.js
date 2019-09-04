@@ -13,7 +13,7 @@ const Footer = () => {
                     height="70px"
                 />
             </div>
-            <div classname="footer_discl">
+            <div className="footer_discl">
                 Manchester city 2018.All rights reserved
             </div>
         </footer>

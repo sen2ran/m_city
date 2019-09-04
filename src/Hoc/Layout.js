@@ -4,7 +4,6 @@ import '../Resources/css/app.css'
 import Header from '../Components/Common/Header';
 import Footer from '../Components/Common/Footer';
 
-
 const Layout = (props) => {
     return(
         <div>
