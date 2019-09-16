@@ -1,7 +1,9 @@
+/*eslint no-unused-vars: "error"*/
 import React, { Component } from 'react';
 import Fade from 'react-reveal/Fade'
 import FormField from '../../ui/formFields'
 import { validate } from '../../ui/misc'
+import {firebasePromotions} from '../../../firebase'
 
 class Enroll extends Component {
 
@@ -33,14 +35,27 @@ class Enroll extends Component {
         let dataToSubmit = {};
         let formIsValid = true
         
-        for(let key in this.state.formData){
+        for(var key in this.state.formData){
             dataToSubmit[key] = this.state.formData[key].value
             formIsValid = this.state.formData[key].valid && formIsValid
         }
 
         if(formIsValid){
-            console.log(dataToSubmit);
-            this.resetFormSucess()
+            // console.log(dataToSubmit);
+            firebasePromotions.orderByChild('email').equalTo(dataToSubmit.email).once("value")
+            .then((snapshot) => {
+                console.log(snapshot.val());
+                if(snapshot.val() === null){
+                    firebasePromotions.push(dataToSubmit)
+                    this.resetFormSucess(true)
+                }else{
+                    this.resetFormSucess(false)
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+            // this.resetFormSucess()
         }else{
             this.setState({
                 formError : true
@@ -49,14 +64,14 @@ class Enroll extends Component {
         
     }
 
-    resetFormSucess(){
+    resetFormSucess(type){
         console.log("Sen2");
         
         const newFormData = {
             ...this.state.formData
         }
 
-        for (let key in newFormData) {
+        for (var key in newFormData) {
             newFormData[key].value = ''
             newFormData[key].valid = false
             newFormData[key].validationMessage = ''
@@ -64,9 +79,12 @@ class Enroll extends Component {
 
         this.setState({
             formError: false,
-            formSuccess: "Success",
+            formSuccess: type ? "Success" : "Already on the database",
             formData: newFormData
         })
+
+
+        
         this.successMessage()
     }
 
@@ -121,6 +139,9 @@ class Enroll extends Component {
                             }
                             <div className="success_label">{this.state.formSuccess}</div>
                             <button onClick={(event) => this.submitForm(event)}>Enroll</button>
+                            <div className="enroll_discl">
+                                On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized.
+                            </div>
                         </div>
                     </form>
                 </div>
