@@ -2,7 +2,7 @@ import firebase from 'firebase/app';
 import 'firebase/database';
 import 'firebase/auth';
 
-
+//sen2 2
 //Sen2
 const config = {
     apiKey: "AIzaSyBow_7muyUUMdjhWdAb-zs-K3SgfLH_O5A",
