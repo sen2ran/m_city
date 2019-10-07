@@ -2,7 +2,7 @@ import React from 'react';
 
 const formField = ({id, formData, change}) => {
     const showError = () => {
-        let errorMessage  =<div>
+        let errorMessage  =<div className="error_label">
             {
                 formData.validation && !formData.valid
                 ?formData.validationMessage
@@ -19,13 +19,43 @@ const formField = ({id, formData, change}) => {
         switch(formData.element){
             case('input') :
                 formTemplate = (
-                   <div className="error_label">
+                   <div >
+                        {
+                            formData.showLabel 
+                                ?<div className="label_inputs">{formData.config.label}</div>
+                                :null
+
+                        }
                        <input
                         {...formData.config}
                         value={formData.value}
                         onChange={(event) => change({event,id})}
                        />
                        { showError() }
+                    </div> 
+                )
+            break ;
+            case('select') :
+                formTemplate = (
+                    <div >
+                        {
+                            formData.showLabel 
+                                ?<div className="label_inputs">{formData.config.label}</div>
+                                :null
+
+                        }
+                        <select
+                            value={formData.value}
+                            onChange={(event) => change({event,id})}
+                        >
+                            <option value="">Select One</option>
+                            {
+                                formData.config.options.map((item) => (
+                                    <option key={item.key} value={item.key}>{item.value}</option>
+                                ))
+                            }
+                        </select>
+                        { showError() }
                     </div> 
                 )
             break ;

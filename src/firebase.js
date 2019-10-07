@@ -2,6 +2,8 @@ import firebase from 'firebase/app';
 import 'firebase/database';
 import 'firebase/auth';
 
+
+//Sen2
 const config = {
     apiKey: "AIzaSyBow_7muyUUMdjhWdAb-zs-K3SgfLH_O5A",
     authDomain: "m-city-7c464.firebaseapp.com",
@@ -17,9 +19,13 @@ firebase.initializeApp(config)
 const firebaseDB = firebase.database()
 const firebaseMatches =  firebaseDB.ref('matches')
 const firebasePromotions = firebaseDB.ref('promotions')
+const firebaseTeams = firebaseDB.ref('teams')
+
 
 export {
+    firebaseDB,
     firebase,
     firebaseMatches,
-    firebasePromotions
+    firebasePromotions,
+    firebaseTeams
 }
